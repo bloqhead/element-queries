@@ -60,7 +60,7 @@ module.exports = function(grunt) {
 						'assets/js/*.js',
 						'!assets/js/build.js',
 						'!assets/js/build.min.js',
-						'!assets/js/vendor/jquery.min.js'
+						'!assets/js/vendor/jquery.js'
 					]
 				}
 			}

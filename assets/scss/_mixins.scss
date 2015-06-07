@@ -1,0 +1,144 @@
+//
+// Mixins
+//
+
+// Clean lists
+@mixin cleanlist {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+// Horizontal lists
+@mixin inlinelist {
+	display: block;
+	@include cleanlist;
+
+	li {
+		display: inline;
+	}
+
+	a {
+		display: inline-block;
+	}
+}
+
+// Hyphen fix because iOS Safari is stupid
+// (recommend 'manual')
+// behaviors: auto, manual, none
+@mixin hyphenfix($behavior) {
+	-webkit-hyphens: $behavior;
+	   -moz-hyphens: $behavior;
+	        hyphens: $behavior;
+}
+
+// Word wrap
+@mixin word-wrap {
+	word-break: break-word;
+	-webkit-hyphens: auto;
+	   -moz-hyphens: auto;
+	        hyphens: auto;
+}
+
+// Ellipsis overflow
+@mixin ellipsis {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+// Smooth text
+@mixin smoothtext {
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased !important;
+	   -moz-font-smoothing: antialiased !important;
+			font-smoothing: antialiased !important;
+}
+
+// Hide text (alternative to using the old "-9999em" method)
+@mixin notext {
+	font: 0/0 a;
+	color: transparent;
+}
+
+// Fluid images
+@mixin fluidimage($force-width: force) {
+	display: block;
+	max-width: 100%;
+	height: auto;
+	@if $force-width == force {
+		width: auto;
+	} @else {
+		width: 100%;
+	}
+}
+
+// Disable selection
+@mixin noselect {
+	-webkit-touch-callout: none;
+	  -webkit-user-select: none;
+	   -khtml-user-select: none;
+	     -moz-user-select: none;
+	      -ms-user-select: none;
+	          user-select: none;
+}
+
+// Box shadow
+@mixin box-shadow($content) {
+	-webkit-box-shadow: $content;
+	   -moz-box-shadow: $content;
+	        box-shadow: $content;
+}
+
+// IE-friendly Opacity
+@mixin opacity($amount) {
+	$ie: ($amount * 100);
+	opacity: $amount;
+	filter: alpha(opacity=#{$ie});
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$ie})";
+}
+
+// Neat column reset
+@mixin reset-columns($new_span: 3, $old_span: 4) {
+	$old_nth: 12 / $old_span;
+	$new_nth: 12 / $new_span;
+
+	// Reset the old nth child
+	&:nth-child(#{$old_nth}n) {
+		margin-right: flex-gutter(container-span(#{$old_span}));
+	}
+
+	// Set up the new one
+	&:nth-child(#{$new_nth}n) {
+		margin-right: 0;
+	}
+}
+
+//
+// Flexbox menus w/ IE fallback
+//
+
+@mixin flexmenu {
+	width: 100%;
+	text-align: center;
+	@include box-sizing(border-box);
+	@include display(flex);
+	@include align-items(stretch);
+	@include align-content(stretch);
+	@include justify-content(center);
+	@include flex-flow(row wrap);
+
+	> li {
+		@include flex(1);
+		@include align-self(stretch);
+	}
+
+	// Fallback for shitty IE
+	html.no-flexbox & {
+		display: table !important;
+
+		> li {
+			display: table-cell !important;
+		}
+	}
+}

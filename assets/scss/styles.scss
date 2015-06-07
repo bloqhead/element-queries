@@ -1,0 +1,48 @@
+//
+// Requirements
+//
+@import 'bourbon/bourbon';
+// @import 'neat/neat';
+@import 'normalize';
+@import 'mixins';
+
+//
+// Base styles
+//
+
+body {
+	background: #eee;
+	font: normal 16px/1.4 "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
+	color: #444;
+}
+
+.container {
+	background: #fff;
+	padding: 20px;
+	margin: 0 auto;
+	max-width: 960px;
+}
+
+.content {
+
+}
+
+.aside {
+
+}
+
+.cool-list {
+	// background: #eee;
+	@include cleanlist;
+
+	li {
+
+		&.cool-list--heading {
+
+		}
+	}
+}
+
+//
+// Element Queries
+//
